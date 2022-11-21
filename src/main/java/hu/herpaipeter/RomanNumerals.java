@@ -41,18 +41,19 @@ public class RomanNumerals {
             );
 
     public String getRomanFormat(int arabic) {
-        if (arabic <= 0 || 4999 < arabic)
-            throw new NumberFormatException();
+        validate(arabic);
 
-        String result = "";
-        for (int place = 1000; 10 < arabic; place /= 10) {
+        StringBuilder result = new StringBuilder();
+        for (int place = 1000; 0 < arabic; place /= 10) {
             int arabicPlaceRounded = (arabic / place) * place;
-            result += 0 < arabicPlaceRounded ? conversions.get(arabicPlaceRounded) : "";
+            result.append(0 < arabicPlaceRounded ? conversions.get(arabicPlaceRounded) : "");
             arabic %= place;
         }
-        if (0 < arabic) {
-            result += this.conversions.get(arabic);
-        }
-        return result;
+        return result.toString();
+    }
+
+    private static void validate(int arabic) {
+        if (arabic <= 0 || 4999 < arabic)
+            throw new NumberFormatException();
     }
 }
